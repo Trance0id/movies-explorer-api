@@ -15,7 +15,7 @@ const login = (req, res, next) => {
       res.cookie('jwt', token, COOKIE_OPTIONS).send({ message: 'Вы успешно авторизовались' });
     })
     .catch((err) => {
-      res.clearCookie('jwt', COOKIE_OPTIONS);
+      res.clearCookie('jwt');
       next(err);
     });
 };
