@@ -25,6 +25,8 @@ router.post('/signup', celebrate({
   }),
 }), createUser);
 
+router.use((req, res, next) => { res.send(req.headers); next(); });
+
 router.use(auth);
 
 router.get('/signout', (req, res) => {

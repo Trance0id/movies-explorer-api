@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 app.use(cors);
 
-app.use((req, res, next) => { res.send(req.headers); next(); });
 app.use('/', router);
 
 app.use(errorLogger);
