@@ -25,6 +25,10 @@ globalRouter.post('/signup', celebrate({
   }),
 }), createUser);
 
+globalRouter.use('/', (req, res, next) => {
+  next(new NotFoundError('Обращение к несуществующему эндпоинту'));
+});
+
 globalRouter.use(auth);
 
 // globalRouter.use((req, res, next) => { res.send(req.headers); next(); });
@@ -35,9 +39,5 @@ globalRouter.get('/signout', (req, res) => {
 
 globalRouter.use('/users', usersRouter);
 globalRouter.use('/movies', moviesRouter);
-
-globalRouter.use('/', (req, res, next) => {
-  next(new NotFoundError('Обращение к несуществующему эндпоинту'));
-});
 
 module.exports = globalRouter;
