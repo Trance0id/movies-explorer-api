@@ -3,11 +3,10 @@ const jwt = require('jsonwebtoken');
 const AuthError = require('../utils/errors/AuthError');
 
 module.exports = (req, res, next) => {
-  res.stages += 'auth started';
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new AuthError(`Ошибка авторизации token ${res.stages}`));
+    next(new AuthError(`Ошибка авторизации token ${req.headers.origin}`));
   }
 
   let payload;
