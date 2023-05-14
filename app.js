@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 app.use(cors);
 
-app.use('/', router);
+app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
