@@ -25,19 +25,17 @@ router.post('/signup', celebrate({
   }),
 }), createUser);
 
-router.get('/signout', (req, res) => {
-  res.clearCookie('jwt', COOKIE_OPTIONS).send({ message: 'Вы успешно вышли из аккаунта' });
-});
-
 router.use(auth);
-
-// router.use((req, res, next) => { res.send(req.headers); next(); });
 
 router.use('/users', usersRouter);
 router.use('/movies', moviesRouter);
 
+router.get('/signout', (req, res) => {
+  res.clearCookie('jwt', COOKIE_OPTIONS).send({ message: 'Вы успешно вышли из аккаунта' });
+});
+
 router.use('/', (req, res, next) => {
-  next(new NotFoundError('Обращение к несуществующему эндпоинту'));
+  next(new NotFoundError(`Обращение к несуществующему эндпоинту ${req.path}`));
 });
 
 module.exports = router;
