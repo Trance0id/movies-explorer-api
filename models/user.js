@@ -17,8 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: [true, 'link field is required'],
-    default: 'Дмитрий',
+    required: [true, 'name field is required'],
     minLength: [2, 'Must be at least 2 characters'],
     maxLength: [30, 'Must be less than 30 characters'],
   },

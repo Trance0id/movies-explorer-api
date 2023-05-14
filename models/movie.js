@@ -4,29 +4,25 @@ const validator = require('validator');
 const movieSchema = mongoose.Schema({
   country: {
     type: String,
-    required: true,
-    minLength: [2, 'Must be at least 2 characters'],
-    maxLength: [30, 'Must be less than 30 characters'],
+    required: [true, 'country field is required'],
   },
   director: {
     type: String,
-    required: true,
-    minLength: [2, 'Must be at least 2 characters'],
-    maxLength: [30, 'Must be less than 30 characters'],
+    required: [true, 'director field is required'],
   },
   duration: {
     type: Number,
-    required: true,
+    required: [true, 'duration field is required'],
     min: [0, 'duration cannot be less than zero'],
   },
   year: {
     type: String,
-    required: true,
+    required: [true, 'year field is required'],
     length: [4, 'Year is 4 characters long'],
   },
   description: {
     type: String,
-    required: true,
+    required: [true, 'description field is required'],
   },
   image: {
     type: String,
@@ -46,23 +42,19 @@ const movieSchema = mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true,
+    required: [true, 'owner field is required'],
   },
   movieId: {
     type: String,
-    required: true,
+    required: [true, 'movieId field is required'],
   },
   nameRU: {
     type: String,
-    required: true,
-    minLength: [2, 'Must be at least 2 characters'],
-    maxLength: [50, 'Must be less than 30 characters'],
+    required: [true, 'nameRU field is required'],
   },
   nameEN: {
     type: String,
-    required: true,
-    minLength: [2, 'Must be at least 2 characters'],
-    maxLength: [50, 'Must be less than 30 characters'],
+    required: [true, 'nameEN field is required'],
   },
 });
 

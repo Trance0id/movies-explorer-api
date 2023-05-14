@@ -5,18 +5,17 @@ const User = require('../models/user');
 const NotFoundError = require('../utils/errors/NotFoundError');
 const IncorrectError = require('../utils/errors/IncorrectError');
 const ConflictError = require('../utils/errors/ConflictError');
+const { COOKIE_OPTIONS } = require('../utils/constants');
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7, // httpOnly: true, sameSite: 'none', secure: true,
-      }).send({ message: 'Вы успешно авторизовались' });
+      res.cookie('jwt', token, COOKIE_OPTIONS).send({ message: 'Вы успешно авторизовались' });
     })
     .catch((err) => {
-      res.clearCookie('jwt');
+      res.clearCookie('jwt', COOKIE_OPTIONS);
       next(err);
     });
 };

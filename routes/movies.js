@@ -11,10 +11,11 @@ const {
 } = require('../controllers/movies');
 
 moviesRouter.get('/', getMovies);
+
 moviesRouter.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().min(2).max(30).required(),
-    director: Joi.string().min(2).max(30).required(),
+    country: Joi.string().required(),
+    director: Joi.string().required(),
     duration: Joi.number().min(0).required(),
     year: Joi.string().length(4).required(),
     description: Joi.string().required(),
@@ -22,10 +23,11 @@ moviesRouter.post('/', celebrate({
     trailerLink: Joi.string().pattern(linkPattern).required(),
     thumbnail: Joi.string().pattern(linkPattern).required(),
     movieId: Joi.string().required(),
-    nameRU: Joi.string().min(2).max(50).required(),
-    nameEN: Joi.string().min(2).max(50).required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 }), createMovie);
+
 moviesRouter.delete('/:_id', celebrate({
   params: Joi.object().keys({
     _id: Joi.string().required(),
