@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 
-const globalRouter = require('express').Router();
+const router = require('express').Router();
 
 const auth = require('../middlewares/auth');
 const usersRouter = require('./users');
@@ -10,14 +10,14 @@ const { COOKIE_OPTIONS } = require('../utils/constants');
 
 const NotFoundError = require('../utils/errors/NotFoundError');
 
-globalRouter.post('/signin', celebrate({
+router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 }), login);
 
-globalRouter.post('/signup', celebrate({
+router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
@@ -25,19 +25,19 @@ globalRouter.post('/signup', celebrate({
   }),
 }), createUser);
 
-globalRouter.use('/', (req, res, next) => {
-  next(new NotFoundError('Обращение к несуществующему эндпоинту'));
-});
-
-globalRouter.use(auth);
-
-// globalRouter.use((req, res, next) => { res.send(req.headers); next(); });
-
-globalRouter.get('/signout', (req, res) => {
+router.get('/signout', (req, res) => {
   res.clearCookie('jwt', COOKIE_OPTIONS).send({ message: 'Вы успешно вышли из аккаунта' });
 });
 
-globalRouter.use('/users', usersRouter);
-globalRouter.use('/movies', moviesRouter);
+router.use(auth);
 
-module.exports = globalRouter;
+// router.use((req, res, next) => { res.send(req.headers); next(); });
+
+router.use('/users', usersRouter);
+router.use('/movies', moviesRouter);
+
+router.use('/', (req, res, next) => {
+  next(new NotFoundError('Обращение к несуществующему эндпоинту'));
+});
+
+module.exports = router;

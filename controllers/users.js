@@ -12,7 +12,7 @@ const login = (req, res, next) => {
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
-      res.cookie('jwt', token, { ...COOKIE_OPTIONS }).send({ message: 'Вы успешно авторизовались' });
+      res.cookie('jwt', token, COOKIE_OPTIONS).send({ message: 'Вы успешно авторизовались' });
     })
     .catch((err) => {
       res.clearCookie('jwt');
