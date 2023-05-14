@@ -25,9 +25,9 @@ router.post('/signup', celebrate({
   }),
 }), createUser);
 
-router.use((req, res, next) => { res.send(req.headers); next(); });
-
 router.use(auth);
+
+// router.use((req, res, next) => { res.send(req.headers); next(); });
 
 router.get('/signout', (req, res) => {
   res.clearCookie('jwt', COOKIE_OPTIONS).send({ message: 'Вы успешно вышли из аккаунта' });
