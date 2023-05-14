@@ -6,17 +6,17 @@ module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new AuthError(`Ошибка авторизации token ${req.headers.origin}`));
+    return next(new AuthError(`Ошибка авторизации token ${req.headers.path}`));
   }
 
   let payload;
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key');
   } catch (err) {
-    next(new AuthError('Ошибка авторизации payload'));
+    return next(new AuthError('Ошибка авторизации'));
   }
 
   req.user = payload;
 
-  next();
+  return next();
 };
