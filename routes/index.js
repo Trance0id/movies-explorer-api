@@ -17,7 +17,7 @@ router.post('/signin', celebrate({
   }),
 }), login);
 
-router.post('signup', celebrate({
+router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
@@ -25,7 +25,7 @@ router.post('signup', celebrate({
   }),
 }), createUser);
 
-router.get('signout', (req, res) => {
+router.get('/signout', (req, res) => {
   res.clearCookie('jwt', COOKIE_OPTIONS).send({ message: 'Вы успешно вышли из аккаунта' });
 });
 
