@@ -2,7 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 
 const router = require('express').Router();
 
-const auth = require('../middlewares/auth');
+// const auth = require('../middlewares/auth');
 const usersRouter = require('./users');
 const moviesRouter = require('./movies');
 const { login, createUser } = require('../controllers/users');
@@ -25,7 +25,7 @@ router.post('/signup', celebrate({
   }),
 }), createUser);
 
-router.use(auth);
+// router.use(auth);
 
 // router.use((req, res, next) => { res.send(req.headers); next(); });
 
