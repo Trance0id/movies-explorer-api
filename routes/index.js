@@ -35,7 +35,7 @@ router.get('/signout', (req, res) => {
 });
 
 router.use('/', (req, res, next) => {
-  next(new NotFoundError(`Обращение к несуществующему эндпоинту ${req.path}`));
+  next(new NotFoundError(`Обращение к несуществующему эндпоинту ${req.url}`));
 });
 
 module.exports = router;
