@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
-const router = require('./routes/index');
+const globalRouter = require('./routes/index');
 
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 app.use(cors);
 
-app.use(router);
+app.use(globalRouter);
 
 app.use(errorLogger);
 app.use(errors());
