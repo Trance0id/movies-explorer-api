@@ -6,14 +6,14 @@ module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    next(new AuthError('Ошибка авторизации'));
+    next(new AuthError('Ошибка авторизации token'));
   }
 
   let payload;
   try {
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key');
   } catch (err) {
-    next(new AuthError('Ошибка авторизации'));
+    next(new AuthError('Ошибка авторизации payload'));
   }
 
   req.user = payload;
