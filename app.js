@@ -13,7 +13,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const cors = require('./middlewares/cors');
 
-const { NODE_ENV, DB_ADRESS, PORT = 3001 } = process.env;
+const { NODE_ENV, DB_ADDRESS, PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(errors());
 app.use(errorHandler);
 
 mongoose
-  .connect(NODE_ENV === 'production' ? DB_ADRESS : 'mongodb://127.0.0.1:27017/bitfilmsdb')
+  .connect(NODE_ENV === 'production' ? DB_ADDRESS : 'mongodb://127.0.0.1:27017/bitfilmsdb')
   .then(() => {
     app.listen(PORT);
   });
