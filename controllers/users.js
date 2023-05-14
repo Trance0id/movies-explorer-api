@@ -8,6 +8,7 @@ const ConflictError = require('../utils/errors/ConflictError');
 const { COOKIE_OPTIONS } = require('../utils/constants');
 
 const login = (req, res, next) => {
+  res.stages += 'login started';
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -21,6 +22,7 @@ const login = (req, res, next) => {
 };
 
 const getUser = (req, res, next) => {
+  res.stages += 'getuser started';
   const userId = req.params.userId || req.user._id;
   User.findById(userId)
     .orFail(() => {
@@ -33,6 +35,7 @@ const getUser = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
+  res.stages += 'create started';
   const { email, password, name } = req.body;
 
   bcrypt
