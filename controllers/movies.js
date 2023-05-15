@@ -29,13 +29,11 @@ const createMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { _id } = req.params;
-  Movie.findOne({ movieId: _id })
-    .orFail(() => {
-      throw new NotFoundError('Фильм не найден');
-    })
+  Movie.findOne({ _id })
+    .orFail(new NotFoundError('Фильм не найден'))
     .then((movie) => {
       if (movie.owner.toString() === req.user._id) {
-        return Movie.deleteOne({ movieId: _id });
+        return Movie.deleteOne({ _id });
       }
       throw new ForbiddenError('Отказано в доступе');
     })

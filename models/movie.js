@@ -18,7 +18,6 @@ const movieSchema = mongoose.Schema({
   year: {
     type: String,
     required: [true, 'year field is required'],
-    length: [4, 'Year is 4 characters long'],
   },
   description: {
     type: String,
@@ -45,7 +44,7 @@ const movieSchema = mongoose.Schema({
     required: [true, 'owner field is required'],
   },
   movieId: {
-    type: String,
+    type: Number,
     required: [true, 'movieId field is required'],
   },
   nameRU: {

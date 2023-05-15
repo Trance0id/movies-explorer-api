@@ -23,9 +23,7 @@ const login = (req, res, next) => {
 const getUser = (req, res, next) => {
   const userId = req.params.userId || req.user._id;
   User.findById(userId)
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найдён');
-    })
+    .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => {
       res.send(user);
     })
@@ -42,6 +40,7 @@ const createUser = (req, res, next) => {
     }))
     .then((user) => {
       User.findById(user._id)
+        .orFail(new NotFoundError('Пользователь не найден'))
         .then((userFound) => {
           res.send(userFound);
         });
@@ -62,11 +61,14 @@ const modifyUser = (req, res, next) => {
     new: true,
     runValidators: true,
   })
+    .orFail()
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
+      } else if (err.name === 'ValidationError') {
         next(new IncorrectError('Введены некорректные данные'));
       } else {
         next(err);
